@@ -6,10 +6,34 @@ const Wrapper = styled.div`
   border: 2px solid red;
 `;
 
-const TableView = ({ children }) => (
-  <Wrapper>
-    <Table>{children}</Table>
-  </Wrapper>
-);
+const TableView = ({ children, positions, handleTablePage }) => {
+  const pageList = positions / 15;
+
+  const createArray = (integer) => {
+    let pageListArray = [];
+    for (let i = 1; i < integer + 1; i++) {
+      pageListArray.push(i);
+    }
+    return pageListArray;
+  };
+  const array = createArray(pageList);
+
+  return (
+    <Wrapper>
+      <Table>{children}</Table>
+      <p>
+        strona
+        <select id="pages" onChange={handleTablePage}>
+          {array.map((item) => (
+            <option value={item * 15 - 15} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>{' '}
+        z {pageList}
+      </p>
+    </Wrapper>
+  );
+};
 
 export default TableView;

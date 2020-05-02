@@ -10,18 +10,14 @@ const StyledTable = styled.table`
   width: 100%;
   overflow-x: scroll;
   /* table-layout: fixed; */
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const StyledRowHeader = styled.tr`
   width: 100%;
   border-top: 2px solid black;
   background-color: green;
-`;
-
-const StyledRow = styled.tr`
-  width: 100%;
-  border-top: 2px solid black;
-  background-color: lightgreen;
 `;
 
 const StyledRecord = styled.th`
@@ -39,8 +35,6 @@ class Table extends React.Component {
     const { children } = this.props;
     return (
       <Wrapper>
-        <h1>Table</h1>
-        <p>pagination</p>
         <StyledTable>
           <tbody>
             <StyledRowHeader>
@@ -52,14 +46,20 @@ class Table extends React.Component {
               <StyledRecord>last month income</StyledRecord>
             </StyledRowHeader>
 
-            {children.map((item) => (
-              <Row
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                city={item.city}
-              />
-            ))}
+            {children.map((item) => {
+              return (
+                <Row
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  city={item.city}
+                  incomes={item.incomes}
+                  totalIncomes={item.totalIncomes}
+                  avgIncomes={item.avgIncomes}
+                  lastMonthIncomes={item.lastMonthIncomes}
+                />
+              );
+            })}
           </tbody>
         </StyledTable>
       </Wrapper>
