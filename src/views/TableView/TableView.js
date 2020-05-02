@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   border: 2px solid red;
 `;
 
-const TableView = ({ children, positions, handleTablePage }) => {
+const TableView = ({ children, positions, handleTablePage, sortingFunc }) => {
   const pageList = positions / 15;
 
   const createArray = (integer) => {
@@ -20,7 +20,7 @@ const TableView = ({ children, positions, handleTablePage }) => {
 
   return (
     <Wrapper>
-      <Table>{children}</Table>
+      <Table sortingFunc={sortingFunc}>{children}</Table>
       <p>
         strona
         <select id="pages" onChange={handleTablePage}>

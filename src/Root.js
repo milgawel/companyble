@@ -62,9 +62,9 @@ class Root extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         let completeData = data;
-        completeData.sort(function (a, b) {
-          return a.id - b.id || a.name.localeCompare(b.name);
-        });
+        // completeData.sort(function (a, b) {
+        //   return a.id - b.id;
+        // });
 
         // ##############################
         for (let i = 0; i < data.length; i++) {
@@ -108,9 +108,37 @@ class Root extends React.Component {
     });
   };
 
-  handleSortingById = () => {
-    completeData.sort(function (a, b) {
-      return a.id - b.id || a.name.localeCompare(b.name);
+  handleSorting = (e, sign) => {
+    let sortType = e.target.getAttribute('data-column');
+    let newArrayToSort = this.state.companies;
+    // sortType = `${sign}${sortType}`;
+    console.log(`[sortType] ${sortType}`);
+
+    function dynamicSort(property) {
+      var sortOrder = 1;
+      // console.log(property[0]);
+      // console.log(typeof property[0]);
+      // if (property[0] === '-') {
+      if (sign === '-') {
+        sortOrder = -1;
+        console.log(`z minusem lecimy w dół`);
+      }
+      // property = property.substr(1);
+      console.log(`z plusem lecimy w górę`);
+      return function (a, b) {
+        /* next line works with strings and numbers,
+         * and you may want to customize it to your needs
+         */
+        var result =
+          a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+        return result * sortOrder;
+      };
+    }
+
+    newArrayToSort.sort(dynamicSort(sortType));
+
+    this.setState({
+      companies: newArrayToSort,
     });
   };
 
@@ -119,6 +147,7 @@ class Root extends React.Component {
     return (
       <MainTemplate>
         <TableView
+          sortingFunc={this.handleSorting}
           positions={this.state.positions}
           page={this.state.page}
           handleTablePage={this.handleTablePage}

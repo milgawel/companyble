@@ -26,24 +26,93 @@ const StyledRecord = styled.th`
 
 class Table extends React.Component {
   state = {
-    filteredBy: 'id',
+    id: true,
+    name: true,
+    city: true,
+    totalIncomes: true,
+    avgIncomes: true,
+    lastMonthIncomes: true,
   };
 
-  handleFilter = () => {};
-
   render() {
-    const { children } = this.props;
+    const { children, sortingFunc } = this.props;
     return (
       <Wrapper>
         <StyledTable>
           <tbody>
             <StyledRowHeader>
-              <StyledRecord>id</StyledRecord>
-              <StyledRecord>name</StyledRecord>
-              <StyledRecord>city</StyledRecord>
-              <StyledRecord>total income</StyledRecord>
-              <StyledRecord>average income</StyledRecord>
-              <StyledRecord>last month income</StyledRecord>
+              <StyledRecord
+                data-column="id"
+                onClick={(e) => {
+                  let sign = this.state.id ? '+' : '-';
+                  sortingFunc(e, sign);
+                  this.setState((prevState) => ({
+                    id: !prevState.id,
+                  }));
+                }}
+              >
+                id
+              </StyledRecord>
+              <StyledRecord
+                data-column="name"
+                onClick={(e) => {
+                  let sign = this.state.name ? '+' : '-';
+                  sortingFunc(e, sign);
+                  this.setState((prevState) => ({
+                    name: !prevState.name,
+                  }));
+                }}
+              >
+                name
+              </StyledRecord>
+              <StyledRecord
+                data-column="city"
+                onClick={(e) => {
+                  let sign = this.state.city ? '+' : '-';
+                  sortingFunc(e, sign);
+                  this.setState((prevState) => ({
+                    city: !prevState.city,
+                  }));
+                }}
+              >
+                city
+              </StyledRecord>
+              <StyledRecord
+                data-column="totalIncomes"
+                onClick={(e) => {
+                  let sign = this.state.totalIncomes ? '+' : '-';
+                  sortingFunc(e, sign);
+                  this.setState((prevState) => ({
+                    totalIncomes: !prevState.totalIncomes,
+                  }));
+                }}
+              >
+                total income
+              </StyledRecord>
+              <StyledRecord
+                data-column="avgIncomes"
+                onClick={(e) => {
+                  let sign = this.state.avgIncomes ? '+' : '-';
+                  sortingFunc(e, sign);
+                  this.setState((prevState) => ({
+                    avgIncomes: !prevState.avgIncomes,
+                  }));
+                }}
+              >
+                average income
+              </StyledRecord>
+              <StyledRecord
+                data-column="lastMonthIncomes"
+                onClick={(e) => {
+                  let sign = this.state.lastMonthIncomes ? '+' : '-';
+                  sortingFunc(e, sign);
+                  this.setState((prevState) => ({
+                    lastMonthIncomes: !prevState.lastMonthIncomes,
+                  }));
+                }}
+              >
+                last month income
+              </StyledRecord>
             </StyledRowHeader>
 
             {children.map((item) => {
