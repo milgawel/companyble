@@ -35,9 +35,7 @@ class Root extends React.Component {
   };
 
   calculateLastMonthIncome = (arrayOfIncomes) => {
-    // określony last moth income
     let lastMonthIncome = 0;
-    // określony ten rok i poprzedni miesiąc
     const date = new Date();
     const thisYear = date.getFullYear();
     let prevMonth = date.getMonth();
@@ -62,11 +60,6 @@ class Root extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         let completeData = data;
-        // completeData.sort(function (a, b) {
-        //   return a.id - b.id;
-        // });
-
-        // ##############################
         for (let i = 0; i < data.length; i++) {
           fetch(`https://recruitment.hal.skygate.io/incomes/${data[i].id}`)
             .then((response) => response.json())
@@ -166,8 +159,6 @@ class Root extends React.Component {
           page={this.state.page}
           handleTablePage={this.handleTablePage}
         >
-          {/* {companies.slice(offset, offset + 15)} */}
-
           {filteredCompanies.length > 0
             ? filteredCompanies.slice(offset, offset + 15)
             : companies.slice(offset, offset + 15)}

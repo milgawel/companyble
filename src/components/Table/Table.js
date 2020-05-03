@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import arrows from 'assets/image.png';
 
 const Wrapper = styled.div`
-  /* width: 100%; */
   min-width: 900px;
   max-width: 1400px;
   padding-top: 20px;
@@ -12,10 +11,6 @@ const Wrapper = styled.div`
 `;
 const StyledTable = styled.table`
   width: 100%;
-
-  resize: both;
-  overflow-x: scroll;
-
   table-layout: fixed;
   background-color: white;
   padding: 10px;
