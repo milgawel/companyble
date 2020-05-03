@@ -4,14 +4,18 @@ import styled from 'styled-components';
 import arrows from 'assets/image.png';
 
 const Wrapper = styled.div`
-  width: 100%;
+  /* width: 100%; */
+  min-width: 900px;
   max-width: 1400px;
   padding-top: 20px;
   margin: 0 auto;
 `;
 const StyledTable = styled.table`
   width: 100%;
+
+  resize: both;
   overflow-x: scroll;
+
   table-layout: fixed;
   background-color: white;
   padding: 10px;
@@ -31,7 +35,8 @@ const StyledRowInput = styled.tr`
 
 const StyledSortRecord = styled.th`
   border: 2px solid #334960;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 30px 5px 10px;
+  min-width: 60px;
   cursor: pointer;
   background-image: url(${arrows});
   background-repeat: no-repeat;
@@ -43,6 +48,7 @@ const StyledInput = styled.input`
   color: black;
   background-color: transparent;
   width: 100%;
+  min-width: 60px;
   padding: 5px;
   text-align: center;
   font-size: 15px;
@@ -103,7 +109,7 @@ class Table extends React.Component {
           <tbody>
             <StyledRowHeader>
               <StyledSortRecord
-                style={{ width: '6%' }}
+                style={{ width: '7%' }}
                 data-column="id"
                 onClick={(e) => {
                   let sign = this.state.id ? '+' : '-';
@@ -128,6 +134,7 @@ class Table extends React.Component {
                 name
               </StyledSortRecord>
               <StyledSortRecord
+                style={{ width: '20%' }}
                 data-column="city"
                 onClick={(e) => {
                   let sign = this.state.city ? '+' : '-';
