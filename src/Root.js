@@ -5,7 +5,7 @@ import TableView from 'views/TableView';
 class Root extends React.Component {
   state = {
     companies: [],
-    positions: 0,
+    filteredCompanies: [],
     offset: 0,
   };
 
@@ -92,7 +92,6 @@ class Root extends React.Component {
 
         this.setState({
           companies: completeData,
-          positions: completeData.length,
         });
       })
       .catch((err) => console.log(err));
@@ -111,48 +110,67 @@ class Root extends React.Component {
   handleSorting = (e, sign) => {
     let sortType = e.target.getAttribute('data-column');
     let newArrayToSort = this.state.companies;
-    // sortType = `${sign}${sortType}`;
-    console.log(`[sortType] ${sortType}`);
+    let filteredNewArrayToSort = this.state.filteredCompanies;
 
     function dynamicSort(property) {
-      var sortOrder = 1;
-      // console.log(property[0]);
-      // console.log(typeof property[0]);
-      // if (property[0] === '-') {
+      let sortOrder = 1;
       if (sign === '-') {
         sortOrder = -1;
-        console.log(`z minusem lecimy w dół`);
       }
-      // property = property.substr(1);
-      console.log(`z plusem lecimy w górę`);
+
       return function (a, b) {
-        /* next line works with strings and numbers,
-         * and you may want to customize it to your needs
-         */
-        var result =
+        const result =
           a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
         return result * sortOrder;
       };
     }
 
     newArrayToSort.sort(dynamicSort(sortType));
+    filteredNewArrayToSort.sort(dynamicSort(sortType));
 
     this.setState({
       companies: newArrayToSort,
+      filteredCompanies: filteredNewArrayToSort,
     });
   };
 
+  handleInputFilter = (e) => {
+    const { companies } = this.state;
+    const input = e.target.value.toString().toLowerCase();
+    console.log(input);
+    const type = e.target.getAttribute('data-filter');
+
+    if (input.length > 0) {
+      const filteredCompanies = companies.filter((obj) =>
+        obj[type].toString().toLowerCase().includes(input),
+      );
+      this.setState({
+        filteredCompanies,
+      });
+    } else {
+      this.setState({
+        filteredCompanies: [],
+      });
+    }
+  };
+
   render() {
-    const { companies, offset } = this.state;
+    const { companies, filteredCompanies, offset } = this.state;
+
     return (
       <MainTemplate>
         <TableView
+          filterFunc={this.handleInputFilter}
           sortingFunc={this.handleSorting}
-          positions={this.state.positions}
+          positions={this.state.companies.length}
           page={this.state.page}
           handleTablePage={this.handleTablePage}
         >
-          {companies.slice(offset, offset + 15)}
+          {/* {companies.slice(offset, offset + 15)} */}
+
+          {filteredCompanies.length > 0
+            ? filteredCompanies.slice(offset, offset + 15)
+            : companies.slice(offset, offset + 15)}
         </TableView>
       </MainTemplate>
     );

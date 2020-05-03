@@ -3,35 +3,27 @@ import styled from 'styled-components';
 import Table from 'components/Table';
 
 const Wrapper = styled.div`
-  border: 2px solid red;
+  width: 100%;
+  margin: 0 auto;
 `;
 
-const TableView = ({ children, positions, handleTablePage, sortingFunc }) => {
-  const pageList = positions / 15;
-
-  const createArray = (integer) => {
-    let pageListArray = [];
-    for (let i = 1; i < integer + 1; i++) {
-      pageListArray.push(i);
-    }
-    return pageListArray;
-  };
-  const array = createArray(pageList);
-
+const TableView = ({
+  children,
+  positions,
+  handleTablePage,
+  sortingFunc,
+  filterFunc,
+}) => {
   return (
     <Wrapper>
-      <Table sortingFunc={sortingFunc}>{children}</Table>
-      <p>
-        strona
-        <select id="pages" onChange={handleTablePage}>
-          {array.map((item) => (
-            <option value={item * 15 - 15} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>{' '}
-        z {pageList}
-      </p>
+      <Table
+        sortingFunc={sortingFunc}
+        filterFunc={filterFunc}
+        positions={positions}
+        handleTablePage={handleTablePage}
+      >
+        {children}
+      </Table>
     </Wrapper>
   );
 };

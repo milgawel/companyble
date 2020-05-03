@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledRow = styled.tr`
-  width: 100%;
-  border-top: 2px solid black;
-  background-color: lightgreen;
-`;
+const StyledRow = styled.tr``;
 
 const StyledRecord = styled.th`
-  border: 2px solid black;
+  border-bottom: 2px solid white;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: lightgray;
 `;
 
 const Row = ({
@@ -19,16 +18,9 @@ const Row = ({
   avgIncomes,
   lastMonthIncomes,
 }) => {
-  // console.log(`[id]${id}`);
-  // console.log(`[name]${name}`);
-  // console.log(`[city]${city}`);
-  // console.log(`[totalIncomes]${totalIncomes}`);
-  // console.log(`[avgIncomes]${avgIncomes}`);
-  // console.log(`[lastMonthIncomes]${lastMonthIncomes}`);
-
   return (
     <StyledRow>
-      <StyledRecord>{id}</StyledRecord>
+      <StyledRecord style={{ width: '10%' }}>{id}</StyledRecord>
       <StyledRecord>{name}</StyledRecord>
       <StyledRecord>{city}</StyledRecord>
       <StyledRecord>{totalIncomes}</StyledRecord>

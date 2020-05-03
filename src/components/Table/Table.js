@@ -1,27 +1,70 @@
 import React from 'react';
 import Row from 'components/Row';
 import styled from 'styled-components';
+import arrows from 'assets/image.png';
 
 const Wrapper = styled.div`
-  width: 80%;
+  width: 100%;
+  max-width: 1400px;
+  padding-top: 20px;
   margin: 0 auto;
 `;
 const StyledTable = styled.table`
   width: 100%;
   overflow-x: scroll;
-  /* table-layout: fixed; */
-  margin-top: 20px;
-  margin-bottom: 20px;
+  table-layout: fixed;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: 3px solid black;
 `;
 
 const StyledRowHeader = styled.tr`
   width: 100%;
-  border-top: 2px solid black;
-  background-color: green;
+  background-color: #334960;
+  color: white;
 `;
 
-const StyledRecord = styled.th`
-  border: 2px solid black;
+const StyledRowInput = styled.tr`
+  background-image: linear-gradient(to bottom, #334960, lightgrey);
+`;
+
+const StyledSortRecord = styled.th`
+  border: 2px solid #334960;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+  background-image: url(${arrows});
+  background-repeat: no-repeat;
+  background-size: 23px;
+  background-position: 95% 50%;
+`;
+
+const StyledInput = styled.input`
+  color: black;
+  background-color: transparent;
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  font-size: 15px;
+  border: none;
+  ::placeholder {
+    color: black;
+  }
+`;
+
+const StyledParagraph = styled.p`
+  width: 150px;
+  position: relative;
+  display: block;
+  margin-right: 10px;
+  margin-left: auto;
+  margin-top: 10px;
+  font-weight: bold;
+`;
+
+const StyledSelect = styled.select`
+  height: 22px;
+  transform: translateY(-2px);
 `;
 
 class Table extends React.Component {
@@ -35,13 +78,32 @@ class Table extends React.Component {
   };
 
   render() {
-    const { children, sortingFunc } = this.props;
+    const {
+      children,
+      sortingFunc,
+      filterFunc,
+      handleTablePage,
+      positions,
+    } = this.props;
+
+    const pageList = positions / 15;
+
+    const createArray = (integer) => {
+      let pageListArray = [];
+      for (let i = 1; i < integer + 1; i++) {
+        pageListArray.push(i);
+      }
+      return pageListArray;
+    };
+    const array = createArray(pageList);
+
     return (
       <Wrapper>
         <StyledTable>
           <tbody>
             <StyledRowHeader>
-              <StyledRecord
+              <StyledSortRecord
+                style={{ width: '6%' }}
                 data-column="id"
                 onClick={(e) => {
                   let sign = this.state.id ? '+' : '-';
@@ -52,8 +114,8 @@ class Table extends React.Component {
                 }}
               >
                 id
-              </StyledRecord>
-              <StyledRecord
+              </StyledSortRecord>
+              <StyledSortRecord
                 data-column="name"
                 onClick={(e) => {
                   let sign = this.state.name ? '+' : '-';
@@ -64,8 +126,8 @@ class Table extends React.Component {
                 }}
               >
                 name
-              </StyledRecord>
-              <StyledRecord
+              </StyledSortRecord>
+              <StyledSortRecord
                 data-column="city"
                 onClick={(e) => {
                   let sign = this.state.city ? '+' : '-';
@@ -76,8 +138,9 @@ class Table extends React.Component {
                 }}
               >
                 city
-              </StyledRecord>
-              <StyledRecord
+              </StyledSortRecord>
+              <StyledSortRecord
+                style={{ width: '13%' }}
                 data-column="totalIncomes"
                 onClick={(e) => {
                   let sign = this.state.totalIncomes ? '+' : '-';
@@ -88,8 +151,9 @@ class Table extends React.Component {
                 }}
               >
                 total income
-              </StyledRecord>
-              <StyledRecord
+              </StyledSortRecord>
+              <StyledSortRecord
+                style={{ width: '15%' }}
                 data-column="avgIncomes"
                 onClick={(e) => {
                   let sign = this.state.avgIncomes ? '+' : '-';
@@ -100,8 +164,9 @@ class Table extends React.Component {
                 }}
               >
                 average income
-              </StyledRecord>
-              <StyledRecord
+              </StyledSortRecord>
+              <StyledSortRecord
+                style={{ width: '17%' }}
                 data-column="lastMonthIncomes"
                 onClick={(e) => {
                   let sign = this.state.lastMonthIncomes ? '+' : '-';
@@ -112,9 +177,52 @@ class Table extends React.Component {
                 }}
               >
                 last month income
-              </StyledRecord>
+              </StyledSortRecord>
             </StyledRowHeader>
-
+            <StyledRowInput>
+              <th>
+                <StyledInput
+                  data-filter="id"
+                  onChange={(e) => filterFunc(e)}
+                  placeholder="filter"
+                />
+              </th>
+              <th>
+                <StyledInput
+                  data-filter="name"
+                  onChange={(e) => filterFunc(e)}
+                  placeholder="filter"
+                />
+              </th>
+              <th>
+                <StyledInput
+                  data-filter="city"
+                  onChange={(e) => filterFunc(e)}
+                  placeholder="filter"
+                />
+              </th>
+              <th>
+                <StyledInput
+                  data-filter="totalIncomes"
+                  onChange={(e) => filterFunc(e)}
+                  placeholder="filter"
+                />
+              </th>
+              <th>
+                <StyledInput
+                  data-filter="avgIncomes"
+                  onChange={(e) => filterFunc(e)}
+                  placeholder="filter"
+                />
+              </th>
+              <th>
+                <StyledInput
+                  data-filter="totalIncomes"
+                  onChange={(e) => filterFunc(e)}
+                  placeholder="filter"
+                />
+              </th>
+            </StyledRowInput>
             {children.map((item) => {
               return (
                 <Row
@@ -131,6 +239,17 @@ class Table extends React.Component {
             })}
           </tbody>
         </StyledTable>
+        <StyledParagraph>
+          Page{' '}
+          <StyledSelect id="pages" onChange={handleTablePage}>
+            {array.map((item) => (
+              <option value={item * 15 - 15} key={item}>
+                {item}
+              </option>
+            ))}
+          </StyledSelect>{' '}
+          of {pageList}
+        </StyledParagraph>
       </Wrapper>
     );
   }
