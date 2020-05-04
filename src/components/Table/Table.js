@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const TableWrapper = styled.div`
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
 `;
 const StyledTable = styled.table`
   min-width: 900px;
