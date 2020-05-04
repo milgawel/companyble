@@ -6,7 +6,6 @@ import arrows from 'assets/image.png';
 const Wrapper = styled.div`
   width: 100vw;
   padding: 20px;
-  margin: 0 auto;
   @media (max-width: 420px) {
     padding: 10px;
   }
