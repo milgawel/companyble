@@ -38,4 +38,4 @@ $ npm start
 
 ## Screenshot
 
-![Website screenshot](./src/assets/webScreenshot.png)
+![Website screenshot](./src/assets/webScreenshot.PNG)
