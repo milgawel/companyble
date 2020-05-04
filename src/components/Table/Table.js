@@ -15,6 +15,7 @@ const TableWrapper = styled.div`
   width: 100%;
   overflow-x: auto;
 `;
+
 const StyledTable = styled.table`
   min-width: 900px;
   max-width: 1400px;
