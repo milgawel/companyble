@@ -18,7 +18,7 @@ Project is created with:
 - styled-components: 5.1.0
 
 Api used for project:
-company API prepared for reruitment purposes
+API prepared for reruitment purposes
 
 ## Setup
 
@@ -34,7 +34,7 @@ $ npm start
 
 - Click on header cell to sort items in column ascending, vlivk again to sorts descending, an so on
 - Under each header cell is located Input which filter data from column below
-- Under the table is located page select, you can chose which page you want to see
+- Under the table there is located page select, you can chose which page you want to see
 
 ## Screenshot
 
