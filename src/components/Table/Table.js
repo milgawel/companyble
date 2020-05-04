@@ -4,13 +4,18 @@ import styled from 'styled-components';
 import arrows from 'assets/image.png';
 
 const Wrapper = styled.div`
-  min-width: 900px;
-  max-width: 1400px;
-  padding-top: 20px;
+  width: 100vw;
+  padding: 20px;
   margin: 0 auto;
 `;
-const StyledTable = styled.table`
+
+const TableWrapper = styled.div`
   width: 100%;
+  overflow-x: scroll;
+`;
+const StyledTable = styled.table`
+  min-width: 900px;
+  max-width: 1400px;
   table-layout: fixed;
   background-color: white;
   padding: 10px;
@@ -57,8 +62,8 @@ const StyledParagraph = styled.p`
   width: 150px;
   position: relative;
   display: block;
-  margin-right: 10px;
-  margin-left: auto;
+  margin-left: 10px;
+  margin-right: auto;
   margin-top: 10px;
   font-weight: bold;
 `;
@@ -69,8 +74,9 @@ const StyledSelect = styled.select`
 `;
 
 class Table extends React.Component {
+  // table describing if sorting will be ascending or descendig
   state = {
-    id: true,
+    id: false,
     name: true,
     city: true,
     totalIncomes: true,
@@ -100,147 +106,149 @@ class Table extends React.Component {
 
     return (
       <Wrapper>
-        <StyledTable>
-          <tbody>
-            <StyledRowHeader>
-              <StyledSortRecord
-                style={{ width: '7%' }}
-                data-column="id"
-                onClick={(e) => {
-                  let sign = this.state.id ? '+' : '-';
-                  sortingFunc(e, sign);
-                  this.setState((prevState) => ({
-                    id: !prevState.id,
-                  }));
-                }}
-              >
-                id
-              </StyledSortRecord>
-              <StyledSortRecord
-                data-column="name"
-                onClick={(e) => {
-                  let sign = this.state.name ? '+' : '-';
-                  sortingFunc(e, sign);
-                  this.setState((prevState) => ({
-                    name: !prevState.name,
-                  }));
-                }}
-              >
-                name
-              </StyledSortRecord>
-              <StyledSortRecord
-                style={{ width: '20%' }}
-                data-column="city"
-                onClick={(e) => {
-                  let sign = this.state.city ? '+' : '-';
-                  sortingFunc(e, sign);
-                  this.setState((prevState) => ({
-                    city: !prevState.city,
-                  }));
-                }}
-              >
-                city
-              </StyledSortRecord>
-              <StyledSortRecord
-                style={{ width: '13%' }}
-                data-column="totalIncomes"
-                onClick={(e) => {
-                  let sign = this.state.totalIncomes ? '+' : '-';
-                  sortingFunc(e, sign);
-                  this.setState((prevState) => ({
-                    totalIncomes: !prevState.totalIncomes,
-                  }));
-                }}
-              >
-                total income
-              </StyledSortRecord>
-              <StyledSortRecord
-                style={{ width: '15%' }}
-                data-column="avgIncomes"
-                onClick={(e) => {
-                  let sign = this.state.avgIncomes ? '+' : '-';
-                  sortingFunc(e, sign);
-                  this.setState((prevState) => ({
-                    avgIncomes: !prevState.avgIncomes,
-                  }));
-                }}
-              >
-                average income
-              </StyledSortRecord>
-              <StyledSortRecord
-                style={{ width: '17%' }}
-                data-column="lastMonthIncomes"
-                onClick={(e) => {
-                  let sign = this.state.lastMonthIncomes ? '+' : '-';
-                  sortingFunc(e, sign);
-                  this.setState((prevState) => ({
-                    lastMonthIncomes: !prevState.lastMonthIncomes,
-                  }));
-                }}
-              >
-                last month income
-              </StyledSortRecord>
-            </StyledRowHeader>
-            <StyledRowInput>
-              <th>
-                <StyledInput
-                  data-filter="id"
-                  onChange={(e) => filterFunc(e)}
-                  placeholder="filter"
-                />
-              </th>
-              <th>
-                <StyledInput
-                  data-filter="name"
-                  onChange={(e) => filterFunc(e)}
-                  placeholder="filter"
-                />
-              </th>
-              <th>
-                <StyledInput
-                  data-filter="city"
-                  onChange={(e) => filterFunc(e)}
-                  placeholder="filter"
-                />
-              </th>
-              <th>
-                <StyledInput
-                  data-filter="totalIncomes"
-                  onChange={(e) => filterFunc(e)}
-                  placeholder="filter"
-                />
-              </th>
-              <th>
-                <StyledInput
-                  data-filter="avgIncomes"
-                  onChange={(e) => filterFunc(e)}
-                  placeholder="filter"
-                />
-              </th>
-              <th>
-                <StyledInput
-                  data-filter="totalIncomes"
-                  onChange={(e) => filterFunc(e)}
-                  placeholder="filter"
-                />
-              </th>
-            </StyledRowInput>
-            {children.map((item) => {
-              return (
-                <Row
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  city={item.city}
-                  incomes={item.incomes}
-                  totalIncomes={item.totalIncomes}
-                  avgIncomes={item.avgIncomes}
-                  lastMonthIncomes={item.lastMonthIncomes}
-                />
-              );
-            })}
-          </tbody>
-        </StyledTable>
+        <TableWrapper>
+          <StyledTable>
+            <tbody>
+              <StyledRowHeader>
+                <StyledSortRecord
+                  style={{ width: '7%' }}
+                  data-column="id"
+                  onClick={(e) => {
+                    let sign = this.state.id ? '+' : '-';
+                    sortingFunc(e, sign);
+                    this.setState((prevState) => ({
+                      id: !prevState.id,
+                    }));
+                  }}
+                >
+                  id
+                </StyledSortRecord>
+                <StyledSortRecord
+                  data-column="name"
+                  onClick={(e) => {
+                    let sign = this.state.name ? '+' : '-';
+                    sortingFunc(e, sign);
+                    this.setState((prevState) => ({
+                      name: !prevState.name,
+                    }));
+                  }}
+                >
+                  name
+                </StyledSortRecord>
+                <StyledSortRecord
+                  style={{ width: '20%' }}
+                  data-column="city"
+                  onClick={(e) => {
+                    let sign = this.state.city ? '+' : '-';
+                    sortingFunc(e, sign);
+                    this.setState((prevState) => ({
+                      city: !prevState.city,
+                    }));
+                  }}
+                >
+                  city
+                </StyledSortRecord>
+                <StyledSortRecord
+                  style={{ width: '13%' }}
+                  data-column="totalIncomes"
+                  onClick={(e) => {
+                    let sign = this.state.totalIncomes ? '+' : '-';
+                    sortingFunc(e, sign);
+                    this.setState((prevState) => ({
+                      totalIncomes: !prevState.totalIncomes,
+                    }));
+                  }}
+                >
+                  total income
+                </StyledSortRecord>
+                <StyledSortRecord
+                  style={{ width: '15%' }}
+                  data-column="avgIncomes"
+                  onClick={(e) => {
+                    let sign = this.state.avgIncomes ? '+' : '-';
+                    sortingFunc(e, sign);
+                    this.setState((prevState) => ({
+                      avgIncomes: !prevState.avgIncomes,
+                    }));
+                  }}
+                >
+                  average income
+                </StyledSortRecord>
+                <StyledSortRecord
+                  style={{ width: '17%' }}
+                  data-column="lastMonthIncomes"
+                  onClick={(e) => {
+                    let sign = this.state.lastMonthIncomes ? '+' : '-';
+                    sortingFunc(e, sign);
+                    this.setState((prevState) => ({
+                      lastMonthIncomes: !prevState.lastMonthIncomes,
+                    }));
+                  }}
+                >
+                  last month income
+                </StyledSortRecord>
+              </StyledRowHeader>
+              <StyledRowInput>
+                <th>
+                  <StyledInput
+                    data-filter="id"
+                    onChange={(e) => filterFunc(e)}
+                    placeholder="filter"
+                  />
+                </th>
+                <th>
+                  <StyledInput
+                    data-filter="name"
+                    onChange={(e) => filterFunc(e)}
+                    placeholder="filter"
+                  />
+                </th>
+                <th>
+                  <StyledInput
+                    data-filter="city"
+                    onChange={(e) => filterFunc(e)}
+                    placeholder="filter"
+                  />
+                </th>
+                <th>
+                  <StyledInput
+                    data-filter="totalIncomes"
+                    onChange={(e) => filterFunc(e)}
+                    placeholder="filter"
+                  />
+                </th>
+                <th>
+                  <StyledInput
+                    data-filter="avgIncomes"
+                    onChange={(e) => filterFunc(e)}
+                    placeholder="filter"
+                  />
+                </th>
+                <th>
+                  <StyledInput
+                    data-filter="totalIncomes"
+                    onChange={(e) => filterFunc(e)}
+                    placeholder="filter"
+                  />
+                </th>
+              </StyledRowInput>
+              {children.map((item) => {
+                return (
+                  <Row
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    city={item.city}
+                    incomes={item.incomes}
+                    totalIncomes={item.totalIncomes}
+                    avgIncomes={item.avgIncomes}
+                    lastMonthIncomes={item.lastMonthIncomes}
+                  />
+                );
+              })}
+            </tbody>
+          </StyledTable>
+        </TableWrapper>
         <StyledParagraph>
           Page{' '}
           <StyledSelect id="pages" onChange={handleTablePage}>

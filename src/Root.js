@@ -1,6 +1,6 @@
 import React from 'react';
 import MainTemplate from 'templates/MainTemplate';
-import TableView from 'views/TableView';
+import Table from 'components/Table';
 
 class Root extends React.Component {
   state = {
@@ -60,6 +60,10 @@ class Root extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         let completeData = data;
+        completeData.sort(function (a, b) {
+          return a.id - b.id || a.name.localeCompare(b.name);
+        });
+
         for (let i = 0; i < data.length; i++) {
           fetch(`https://recruitment.hal.skygate.io/incomes/${data[i].id}`)
             .then((response) => response.json())
@@ -152,17 +156,16 @@ class Root extends React.Component {
 
     return (
       <MainTemplate>
-        <TableView
+        <Table
           filterFunc={this.handleInputFilter}
           sortingFunc={this.handleSorting}
           positions={this.state.companies.length}
-          page={this.state.page}
           handleTablePage={this.handleTablePage}
         >
           {filteredCompanies.length > 0
             ? filteredCompanies.slice(offset, offset + 15)
             : companies.slice(offset, offset + 15)}
-        </TableView>
+        </Table>
       </MainTemplate>
     );
   }
