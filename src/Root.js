@@ -153,7 +153,6 @@ class Root extends React.Component {
 
   render() {
     const { companies, filteredCompanies, offset } = this.state;
-
     return (
       <MainTemplate>
         <Table
